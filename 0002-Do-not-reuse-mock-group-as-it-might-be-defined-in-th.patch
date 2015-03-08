@@ -1,0 +1,65 @@
+From d7a93692c2a43b9b288dbe2315c32ccdce5d025e Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Tue, 17 Mar 2015 14:59:12 +0000
+Subject: [PATCH 2/2] Do not reuse mock group, as it might be defined in the
+ nested chroot.
+Organization: Intel Corporation (UK) Ltd. - Co. Reg. #1134945 - Pipers Way, Swindon SN3 1RJ
+
+---
+ py/mockbuild/util.py | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/py/mockbuild/util.py b/py/mockbuild/util.py
+index 74b3cd7..19f1c54 100644
+--- a/py/mockbuild/util.py
++++ b/py/mockbuild/util.py
+@@ -615,7 +615,7 @@ def find_non_nfs_dir():
+ 
+ 
+ @traceLog()
+-def setup_default_config_opts(unprivUid, version, pkgpythondir):
++def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+     "sets up default configuration."
+     config_opts = {}
+     config_opts['version'] = version
+@@ -629,11 +629,14 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir):
+     config_opts['log_config_file'] = '/usr/share/defaults/mock/logging.ini'
+     config_opts['rpmbuild_timeout'] = 0
+     config_opts['chrootuid'] = unprivUid
+-    try:
+-        config_opts['chrootgid'] = grp.getgrnam("mock")[2]
+-    except KeyError:
+-        #  'mock' group doesn't exist, must set in config file
+-        pass
++    if unprivGid:
++        config_opts['chrootgid'] = unprivGid
++    else:
++        try:
++            config_opts['chrootgid'] = grp.getgrnam("mock")[2]
++        except KeyError:
++            #  'mock' group doesn't exist, must set in config file
++            pass
+     config_opts['build_log_fmt_name'] = "unadorned"
+     config_opts['root_log_fmt_name']  = "detailed"
+     config_opts['state_log_fmt_name'] = "state"
+@@ -987,11 +990,13 @@ def do_update_config(log, config_opts, cfg, uidManager, skipError=True):
+ def load_config(config_path, name, uidManager, version, PKGPYTHONDIR):
+     log = logging.getLogger()
+     if uidManager:
+-        gid = uidManager.unprivUid
++        uid = uidManager.unprivUid
++        gid = uidManager.unprivGid
+     else:
+-        gid = os.getuid()
+-    config_opts = setup_default_config_opts(gid,
+-            version, PKGPYTHONDIR)
++        uid = os.getuid()
++        gid = os.getgid()
++    config_opts = setup_default_config_opts(
++        uid, version, PKGPYTHONDIR, unprivGid=gid)
+ 
+     # array to save config paths
+     config_opts['config_paths'] = []
+-- 
+2.1.0
+

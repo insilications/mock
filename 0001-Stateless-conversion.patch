@@ -1,0 +1,67 @@
+From de93dce60a8de340c5ec348dc9a7ec8298736415 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Mon, 9 Mar 2015 11:52:00 +0000
+Subject: [PATCH] Stateless conversion.
+Organization: Intel Corporation (UK) Ltd. - Co. Reg. #1134945 - Pipers Way, Swindon SN3 1RJ
+
+---
+ py/mock.py                | 2 ++
+ py/mockbuild/buildroot.py | 4 +++-
+ py/mockbuild/util.py      | 4 ++--
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/py/mock.py b/py/mock.py
+index aeaca92..35e94bd 100755
+--- a/py/mock.py
++++ b/py/mock.py
+@@ -355,6 +355,8 @@ def setup_logging(config_path, config_opts, options):
+                 log.warning("Could not find required logging config file: %s. Using default..." % log_ini)
+                 log_ini = os.path.join("/etc/mock", config_opts["log_config_file"])
+                 if not os.path.exists(log_ini):
++                    log_ini = config_opts["log_config_file"]
++                if not os.path.exists(log_ini):
+                     raise IOError("Could not find log config file %s" % log_ini)
+             else:
+                 raise IOError("Could not find log config file %s" % log_ini)
+diff --git a/py/mockbuild/buildroot.py b/py/mockbuild/buildroot.py
+index b9f905b..080cd14 100644
+--- a/py/mockbuild/buildroot.py
++++ b/py/mockbuild/buildroot.py
+@@ -170,9 +170,11 @@ class Buildroot(object):
+     def _copy_config(self, filename):
+         etcdir = self.make_chroot_path('etc')
+         conf_file = os.path.join(etcdir, filename)
++        src_file = os.path.join('/etc', filename)
+         if os.path.exists(conf_file):
+             os.remove(conf_file)
+-        shutil.copy2(os.path.join('/etc', filename), etcdir)
++        if os.path.exists(src_file):
++            shutil.copy2(src_file, etcdir)
+ 
+     @traceLog()
+     def _setup_resolver_config(self):
+diff --git a/py/mockbuild/util.py b/py/mockbuild/util.py
+index 2f65c0f..74b3cd7 100644
+--- a/py/mockbuild/util.py
++++ b/py/mockbuild/util.py
+@@ -626,7 +626,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir):
+     config_opts['check'] = True
+     config_opts['post_install'] = False
+     config_opts['chroothome'] = '/builddir'
+-    config_opts['log_config_file'] = 'logging.ini'
++    config_opts['log_config_file'] = '/usr/share/defaults/mock/logging.ini'
+     config_opts['rpmbuild_timeout'] = 0
+     config_opts['chrootuid'] = unprivUid
+     try:
+@@ -1008,7 +1008,7 @@ def load_config(config_path, name, uidManager, version, PKGPYTHONDIR):
+     config_opts['config_file'] = chroot_cfg_path
+ 
+     cfg = os.path.join(config_path, 'site-defaults.cfg')
+-    do_update_config(log, config_opts, cfg, uidManager)
++    do_update_config(log, config_opts, cfg, uidManager, skipError=True)
+ 
+     do_update_config(log, config_opts, chroot_cfg_path, uidManager, skipError=False)
+ 
+-- 
+2.1.0
+

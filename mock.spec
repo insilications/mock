@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 9
+Release  : 10
 URL      : https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
 Source0  : https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
 Summary  : No detailed summary available
@@ -15,6 +15,8 @@ Requires: mock-python
 Requires: mock-data
 Requires: mock-doc
 BuildRequires : pkgconfig(bash-completion)
+Patch1: 0001-Stateless-conversion.patch
+Patch2: 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
 
 %description
 These 3 src.rpms are setup to build on almost any rpm-based system.
@@ -55,6 +57,8 @@ python components for the mock package.
 
 %prep
 %setup -q -n mock-1.2.14
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autogen --disable-static
@@ -63,6 +67,13 @@ make V=1  %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 %make_install
+## make_install_append content
+install -d -m 755 %{buildroot}/usr/share/pam.d
+install -d -m 755 %{buildroot}/usr/share/defaults/mock
+install -p -D -m 644 etc/mock/logging.ini %{buildroot}/usr/share/defaults/mock/
+install -p -D -m 644 etc/pam/mock %{buildroot}/usr/share/pam.d/
+rm -rf %{buildroot}/etc
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -76,6 +87,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/share/bash-completion/completions/mock
 /usr/share/bash-completion/completions/mockchain
+/usr/share/defaults/mock/logging.ini
+/usr/share/pam.d/mock
 
 %files doc
 %defattr(-,root,root,-)

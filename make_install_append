@@ -1,0 +1,7 @@
+install -d -m 755 %{buildroot}/usr/share/pam.d
+install -d -m 755 %{buildroot}/usr/share/defaults/mock
+
+install -p -D -m 644 etc/mock/logging.ini %{buildroot}/usr/share/defaults/mock/
+install -p -D -m 644 etc/pam/mock %{buildroot}/usr/share/pam.d/
+
+rm -rf %{buildroot}/etc

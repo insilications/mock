@@ -1,4 +1,4 @@
-From 4b21ddbb1a6f7fa3cea05ce79d7ddbb10ff76b4f Mon Sep 17 00:00:00 2001
+From 4e0d7922f5dc619455900ba0cb238b0cb9a7815d Mon Sep 17 00:00:00 2001
 From: Alberto Murillo <alberto.murillo.silva@intel.com>
 Date: Wed, 2 Dec 2015 13:14:34 -0600
 Subject: [PATCH] Stateless conversion
@@ -22,7 +22,7 @@ index 0b68d38..6ee10ef 100755
              else:
                  raise IOError("Could not find log config file %s" % log_ini)
 diff --git a/py/mockbuild/util.py b/py/mockbuild/util.py
-index d868a33..0446dc0 100644
+index d868a33..92569a6 100644
 --- a/py/mockbuild/util.py
 +++ b/py/mockbuild/util.py
 @@ -652,7 +652,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir):
@@ -39,7 +39,7 @@ index d868a33..0446dc0 100644
  
      cfg = os.path.join(config_path, 'site-defaults.cfg')
 -    do_update_config(log, config_opts, cfg, uidManager, name)
-+    do_update_config(log, config_opts, cfg, uidManager, name, skipError=True))
++    do_update_config(log, config_opts, cfg, uidManager, name, skipError=True)
  
      do_update_config(log, config_opts, chroot_cfg_path, uidManager, name, skipError=False)
  

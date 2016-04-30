@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 13
+Release  : 14
 URL      : https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
 Source0  : https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
 Summary  : No detailed summary available

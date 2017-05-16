@@ -1,5 +1,5 @@
 PKG_NAME := mock
-URL := https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
-ARCHIVES :=
+URL := https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
+
 
 include ../common/Makefile.common

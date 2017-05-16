@@ -4,9 +4,9 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 18
-URL      : https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
-Source0  : https://git.fedorahosted.org/cgit/mock.git/snapshot/mock-1.2.14.tar.xz
+Release  : 19
+URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
+Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
@@ -15,6 +15,9 @@ Requires: mock-python
 Requires: mock-data
 Requires: mock-doc
 BuildRequires : pkgconfig(bash-completion)
+BuildRequires : python
+BuildRequires : python-dev
+BuildRequires : python3
 Patch1: 0001-Stateless-conversion.patch
 Patch2: 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
 
@@ -56,15 +59,21 @@ python components for the mock package.
 
 
 %prep
-%setup -q -n mock-1.2.14
+%setup -q -n mock-mock-1.2.14
 %patch1 -p1
 %patch2 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C
+export SOURCE_DATE_EPOCH=1494963039
 %autogen --disable-static
 make V=1  %{?_smp_mflags}
 
 %install
+export SOURCE_DATE_EPOCH=1494963039
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -96,4 +105,4 @@ rm -rf %{buildroot}/etc
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+/usr/lib/python2*/*

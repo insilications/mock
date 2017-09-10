@@ -4,14 +4,14 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 20
+Release  : 21
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: mock-bin
-Requires: mock-python
+Requires: mock-legacypython
 Requires: mock-data
 Requires: mock-doc
 BuildRequires : pkgconfig(bash-completion)
@@ -50,12 +50,12 @@ Group: Documentation
 doc components for the mock package.
 
 
-%package python
-Summary: python components for the mock package.
+%package legacypython
+Summary: legacypython components for the mock package.
 Group: Default
 
-%description python
-python components for the mock package.
+%description legacypython
+legacypython components for the mock package.
 
 
 %prep
@@ -68,12 +68,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1494963039
+export SOURCE_DATE_EPOCH=1505006420
 %autogen --disable-static
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1494963039
+export SOURCE_DATE_EPOCH=1505006420
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -103,6 +103,6 @@ rm -rf %{buildroot}/etc
 %defattr(-,root,root,-)
 %doc /usr/share/man/man1/*
 
-%files python
+%files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*

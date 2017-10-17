@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 21
+Release  : 22
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
@@ -14,12 +14,14 @@ Requires: mock-bin
 Requires: mock-legacypython
 Requires: mock-data
 Requires: mock-doc
+Requires: mock-python
 BuildRequires : pkgconfig(bash-completion)
 BuildRequires : python
 BuildRequires : python-dev
 BuildRequires : python3
 Patch1: 0001-Stateless-conversion.patch
 Patch2: 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
+Patch3: 0003-Add-entry-for-mock-in-sudoers.patch
 
 %description
 These 3 src.rpms are setup to build on almost any rpm-based system.
@@ -53,32 +55,44 @@ doc components for the mock package.
 %package legacypython
 Summary: legacypython components for the mock package.
 Group: Default
+Requires: python-core
 
 %description legacypython
 legacypython components for the mock package.
+
+
+%package python
+Summary: python components for the mock package.
+Group: Default
+Requires: mock-legacypython
+
+%description python
+python components for the mock package.
 
 
 %prep
 %setup -q -n mock-mock-1.2.14
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505006420
+export SOURCE_DATE_EPOCH=1508269306
 %autogen --disable-static
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1505006420
+export SOURCE_DATE_EPOCH=1508269306
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
 install -d -m 755 %{buildroot}/usr/share/pam.d
 install -d -m 755 %{buildroot}/usr/share/defaults/mock
+install -p -D -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
 install -p -D -m 644 etc/mock/logging.ini %{buildroot}/usr/share/defaults/mock/
 install -p -D -m 644 etc/pam/mock %{buildroot}/usr/share/pam.d/
 rm -rf %{buildroot}/etc
@@ -97,6 +111,7 @@ rm -rf %{buildroot}/etc
 /usr/share/bash-completion/completions/mock
 /usr/share/bash-completion/completions/mockchain
 /usr/share/defaults/mock/logging.ini
+/usr/share/defaults/sudo/sudoers.d/mock
 /usr/share/pam.d/mock
 
 %files doc
@@ -106,3 +121,6 @@ rm -rf %{buildroot}/etc
 %files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files python
+%defattr(-,root,root,-)

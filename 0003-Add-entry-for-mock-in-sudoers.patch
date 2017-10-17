@@ -1,0 +1,33 @@
+From 52ea6e5532df9898d2db3f7c34aa8b7e7de01de6 Mon Sep 17 00:00:00 2001
+From: Caio Marcelo de Oliveira Filho <caio.oliveira@intel.com>
+Date: Tue, 17 Oct 2017 12:19:09 -0700
+Subject: [PATCH] Add entry for mock in sudoers
+
+Mock needs to run with root permissions but not directly with the root
+user. In Clear Linux the way to run it is using sudo. This patch adds
+permissions for whoever is in the mock group to be able to use sudo to
+run mock.
+
+For reference:
+
+- In the past mock had a C compiled wrapper to call mock itself, and
+  made the wrapper have the suidbit (with root as owner). The wrapper
+  was removed from mock.
+
+- Currently in Fedora, consolehelper is used to provide the necessary
+  privileges, it is a generalization from the mechanism above
+---
+ mock.sudoers | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 mock.sudoers
+
+diff --git a/mock.sudoers b/mock.sudoers
+new file mode 100644
+index 0000000..aafff95
+--- /dev/null
++++ b/mock.sudoers
+@@ -0,0 +1 @@
++%mock ALL = (root) NOPASSWD: /usr/bin/mock
+-- 
+2.9.5
+

@@ -4,6 +4,8 @@ install -d -m 755 %{buildroot}/usr/share/defaults/mock
 install -p -D -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
 
 install -p -D -m 644 etc/mock/logging.ini %{buildroot}/usr/share/defaults/mock/
+install -p -D -m 644 etc/mock/clear.cfg %{buildroot}/usr/share/defaults/mock/
+ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg
 install -p -D -m 644 etc/pam/mock %{buildroot}/usr/share/pam.d/
 
 rm -rf %{buildroot}/etc

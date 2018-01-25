@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 22
+Release  : 23
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
@@ -15,11 +15,18 @@ Requires: mock-legacypython
 Requires: mock-data
 Requires: mock-doc
 Requires: mock-python
+BuildRequires : automake
+BuildRequires : automake-dev
+BuildRequires : gettext-bin
+BuildRequires : libtool
+BuildRequires : libtool-dev
+BuildRequires : m4
+BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(bash-completion)
 BuildRequires : python
 BuildRequires : python-dev
 BuildRequires : python3
-Patch1: 0001-Stateless-conversion.patch
+Patch1: 0001-clearlinux-stateless-configuration.patch
 Patch2: 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
 Patch3: 0003-Add-entry-for-mock-in-sudoers.patch
 
@@ -81,12 +88,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1508269306
+export SOURCE_DATE_EPOCH=1516900450
 %autogen --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1508269306
+export SOURCE_DATE_EPOCH=1516900450
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -94,6 +101,8 @@ install -d -m 755 %{buildroot}/usr/share/pam.d
 install -d -m 755 %{buildroot}/usr/share/defaults/mock
 install -p -D -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
 install -p -D -m 644 etc/mock/logging.ini %{buildroot}/usr/share/defaults/mock/
+install -p -D -m 644 etc/mock/clear.cfg %{buildroot}/usr/share/defaults/mock/
+ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg
 install -p -D -m 644 etc/pam/mock %{buildroot}/usr/share/pam.d/
 rm -rf %{buildroot}/etc
 ## make_install_append end
@@ -110,6 +119,8 @@ rm -rf %{buildroot}/etc
 %defattr(-,root,root,-)
 /usr/share/bash-completion/completions/mock
 /usr/share/bash-completion/completions/mockchain
+/usr/share/defaults/mock/clear.cfg
+/usr/share/defaults/mock/default.cfg
 /usr/share/defaults/mock/logging.ini
 /usr/share/defaults/sudo/sudoers.d/mock
 /usr/share/pam.d/mock

@@ -1,4 +1,4 @@
-From 70820077ac34d65c3cba02d9bdc11f5772c1180d Mon Sep 17 00:00:00 2001
+From 73431cdb3de7df4608f588e4b5690038c4accecd Mon Sep 17 00:00:00 2001
 From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
 Date: Wed, 24 Jan 2018 11:17:28 -0600
 Subject: [PATCH] clearlinux stateless configuration
@@ -7,10 +7,10 @@ Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
 ---
  Makefile.am          |  1 +
  docs/mock.1          |  9 ++++++---
- etc/mock/clear.cfg   | 36 ++++++++++++++++++++++++++++++++++++
+ etc/mock/clear.cfg   | 37 +++++++++++++++++++++++++++++++++++++
  py/mock.py           |  7 ++++++-
  py/mockbuild/util.py |  4 ++--
- 5 files changed, 51 insertions(+), 6 deletions(-)
+ 5 files changed, 52 insertions(+), 6 deletions(-)
  create mode 100644 etc/mock/clear.cfg
 
 diff --git a/Makefile.am b/Makefile.am
@@ -54,19 +54,20 @@ index 12ebea7..5dacba9 100644
  .SH "EXAMPLES"
 diff --git a/etc/mock/clear.cfg b/etc/mock/clear.cfg
 new file mode 100644
-index 0000000..c3706f0
+index 0000000..c437d28
 --- /dev/null
 +++ b/etc/mock/clear.cfg
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,37 @@
 +config_opts['root'] = 'clear'
 +config_opts['target_arch'] = 'x86_64'
 +config_opts['legal_host_arches'] = ('x86_64',)
 +config_opts['chroot_setup_cmd'] = 'groupinstall build srpm-build'
 +config_opts['dist'] = 'clear'  # only useful for --resultdir variable subst
 +config_opts['extra_chroot_dirs'] = [ '/run/lock', ]
-+config_opts['useradd'] = '/usr/sbin/useradd -m -u %(uid)s -g %(gid)s -d %(home)s  %(user)s' 
++config_opts['useradd'] = '/usr/sbin/useradd -m -u %(uid)s -g %(gid)s -d %(home)s  %(user)s'
 +config_opts['plugin_conf']['ccache_enable'] = False
-+
++config_opts['releasever'] = 'clear'
++config_opts['package_manager'] = 'dnf'
 +
 +config_opts['yum.conf'] = """
 +[main]

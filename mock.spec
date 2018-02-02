@@ -4,14 +4,14 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 23
+Release  : 25
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: mock-bin
-Requires: mock-legacypython
+Requires: mock-python3
 Requires: mock-data
 Requires: mock-doc
 Requires: mock-python
@@ -23,8 +23,6 @@ BuildRequires : libtool-dev
 BuildRequires : m4
 BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(bash-completion)
-BuildRequires : python
-BuildRequires : python-dev
 BuildRequires : python3
 Patch1: 0001-clearlinux-stateless-configuration.patch
 Patch2: 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
@@ -59,22 +57,22 @@ Group: Documentation
 doc components for the mock package.
 
 
-%package legacypython
-Summary: legacypython components for the mock package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the mock package.
-
-
 %package python
 Summary: python components for the mock package.
 Group: Default
-Requires: mock-legacypython
+Requires: mock-python3
 
 %description python
 python components for the mock package.
+
+
+%package python3
+Summary: python3 components for the mock package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the mock package.
 
 
 %prep
@@ -88,12 +86,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1516900450
-%autogen --disable-static
+export SOURCE_DATE_EPOCH=1517544548
+%autogen --disable-static PYTHON=python3
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1516900450
+export SOURCE_DATE_EPOCH=1517544548
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -129,9 +127,9 @@ rm -rf %{buildroot}/etc
 %defattr(-,root,root,-)
 %doc /usr/share/man/man1/*
 
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
-
 %files python
 %defattr(-,root,root,-)
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*

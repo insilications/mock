@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 27
+Release  : 28
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
@@ -13,7 +13,8 @@ License  : GPL-2.0
 Requires: mock-bin
 Requires: mock-python3
 Requires: mock-data
-Requires: mock-doc
+Requires: mock-license
+Requires: mock-man
 Requires: mock-python
 BuildRequires : automake
 BuildRequires : automake-dev
@@ -36,6 +37,8 @@ They have a simple chain of buildrequires:
 Summary: bin components for the mock package.
 Group: Binaries
 Requires: mock-data
+Requires: mock-license
+Requires: mock-man
 
 %description bin
 bin components for the mock package.
@@ -49,12 +52,20 @@ Group: Data
 data components for the mock package.
 
 
-%package doc
-Summary: doc components for the mock package.
-Group: Documentation
+%package license
+Summary: license components for the mock package.
+Group: Default
 
-%description doc
-doc components for the mock package.
+%description license
+license components for the mock package.
+
+
+%package man
+Summary: man components for the mock package.
+Group: Default
+
+%description man
+man components for the mock package.
 
 
 %package python
@@ -86,13 +97,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517544548
+export SOURCE_DATE_EPOCH=1530383423
 %autogen --disable-static PYTHON=python3
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1517544548
+export SOURCE_DATE_EPOCH=1530383423
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/mock
+cp COPYING %{buildroot}/usr/share/doc/mock/COPYING
 %make_install
 ## make_install_append content
 install -d -m 755 %{buildroot}/usr/share/pam.d
@@ -123,9 +136,14 @@ rm -rf %{buildroot}/etc
 /usr/share/defaults/sudo/sudoers.d/mock
 /usr/share/pam.d/mock
 
-%files doc
+%files license
 %defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
+/usr/share/doc/mock/COPYING
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/mock.1
+/usr/share/man/man1/mockchain.1
 
 %files python
 %defattr(-,root,root,-)

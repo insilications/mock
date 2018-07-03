@@ -151,3 +151,4 @@ rm -rf %{buildroot}/etc
 %files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
+%exclude /usr/lib/python3.7/site-packages/mockbuild/__pycache__/plugin.cpython-37.pyc

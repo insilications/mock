@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 33
+Release  : 34
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
@@ -97,12 +97,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530383423
+export SOURCE_DATE_EPOCH=1531334861
 %autogen --disable-static PYTHON=python3
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1530383423
+export SOURCE_DATE_EPOCH=1531334861
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/mock
 cp COPYING %{buildroot}/usr/share/doc/mock/COPYING
@@ -151,4 +151,3 @@ rm -rf %{buildroot}/etc
 %files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
-%exclude /usr/lib/python3.7/site-packages/mockbuild/__pycache__/plugin.cpython-37.pyc

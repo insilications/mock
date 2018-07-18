@@ -1,3 +1,6 @@
 0001-clearlinux-stateless-configuration.patch
 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
 0003-Add-entry-for-mock-in-sudoers.patch
+0004-ccache-use-different-bind-mount-directory.patch
+0005-Allow-the-groupadd-g-command-to-fail.patch
+0006-Disable-the-colourful-PROMPT_COMMAND-for-chroot.patch

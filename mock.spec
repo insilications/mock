@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 34
+Release  : 35
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
@@ -28,6 +28,9 @@ BuildRequires : python3
 Patch1: 0001-clearlinux-stateless-configuration.patch
 Patch2: 0002-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
 Patch3: 0003-Add-entry-for-mock-in-sudoers.patch
+Patch4: 0004-ccache-use-different-bind-mount-directory.patch
+Patch5: 0005-Allow-the-groupadd-g-command-to-fail.patch
+Patch6: 0006-Disable-the-colourful-PROMPT_COMMAND-for-chroot.patch
 
 %description
 These 3 src.rpms are setup to build on almost any rpm-based system.
@@ -91,18 +94,21 @@ python3 components for the mock package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531334861
+export SOURCE_DATE_EPOCH=1531947656
 %autogen --disable-static PYTHON=python3
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1531334861
+export SOURCE_DATE_EPOCH=1531947656
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/mock
 cp COPYING %{buildroot}/usr/share/doc/mock/COPYING

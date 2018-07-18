@@ -1,0 +1,29 @@
+From 1351703d88be2cc6486d9c51452d94cce10d1ec2 Mon Sep 17 00:00:00 2001
+From: Thiago Macieira <thiago.macieira@intel.com>
+Date: Tue, 3 Jul 2018 16:38:38 -0700
+Subject: [PATCH 5/7] Allow the groupadd -g command to fail
+
+It fails for me consistently because I am using the same UID/GID inside
+the container as outside and group ID 100 already exists in Clear.
+
+Signed-off-by: Thiago Macieira <thiago.macieira@intel.com>
+---
+ py/mockbuild/buildroot.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/py/mockbuild/buildroot.py b/py/mockbuild/buildroot.py
+index 59e1e2a..3b3f06a 100644
+--- a/py/mockbuild/buildroot.py
++++ b/py/mockbuild/buildroot.py
+@@ -257,7 +257,7 @@ class Buildroot(object):
+                       shell=False, raiseExc=False, nosync=True)
+ 
+         self.doChroot(['/usr/sbin/groupadd', '-g', dets['gid'], dets['group']],
+-                      shell=False, nosync=True)
++                      shell=False, raiseExc=False, nosync=True)
+         self.doChroot(self.config['useradd'] % dets, shell=True, nosync=True)
+         self._enable_chrootuser_account()
+ 
+-- 
+2.18.0
+

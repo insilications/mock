@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 35
+Release  : 37
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
@@ -31,6 +31,7 @@ Patch3: 0003-Add-entry-for-mock-in-sudoers.patch
 Patch4: 0004-ccache-use-different-bind-mount-directory.patch
 Patch5: 0005-Allow-the-groupadd-g-command-to-fail.patch
 Patch6: 0006-Disable-the-colourful-PROMPT_COMMAND-for-chroot.patch
+Patch7: 0007-Fix-systemd-nspawn-use.patch
 
 %description
 These 3 src.rpms are setup to build on almost any rpm-based system.
@@ -97,23 +98,24 @@ python3 components for the mock package.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531947656
+export SOURCE_DATE_EPOCH=1532978598
 %autogen --disable-static PYTHON=python3
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1531947656
+export SOURCE_DATE_EPOCH=1532978598
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/mock
 cp COPYING %{buildroot}/usr/share/doc/mock/COPYING
 %make_install
-## make_install_append content
+## install_append content
 install -d -m 755 %{buildroot}/usr/share/pam.d
 install -d -m 755 %{buildroot}/usr/share/defaults/mock
 install -p -D -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
@@ -122,7 +124,7 @@ install -p -D -m 644 etc/mock/clear.cfg %{buildroot}/usr/share/defaults/mock/
 ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg
 install -p -D -m 644 etc/pam/mock %{buildroot}/usr/share/pam.d/
 rm -rf %{buildroot}/etc
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)

@@ -4,18 +4,19 @@
 #
 Name     : mock
 Version  : 1.2.14
-Release  : 37
+Release  : 38
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.2.14.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: mock-bin
-Requires: mock-python3
-Requires: mock-data
-Requires: mock-license
-Requires: mock-man
-Requires: mock-python
+Requires: mock-bin = %{version}-%{release}
+Requires: mock-data = %{version}-%{release}
+Requires: mock-license = %{version}-%{release}
+Requires: mock-man = %{version}-%{release}
+Requires: mock-python = %{version}-%{release}
+Requires: mock-python3 = %{version}-%{release}
+Requires: six
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : gettext-bin
@@ -40,9 +41,9 @@ They have a simple chain of buildrequires:
 %package bin
 Summary: bin components for the mock package.
 Group: Binaries
-Requires: mock-data
-Requires: mock-license
-Requires: mock-man
+Requires: mock-data = %{version}-%{release}
+Requires: mock-license = %{version}-%{release}
+Requires: mock-man = %{version}-%{release}
 
 %description bin
 bin components for the mock package.
@@ -75,7 +76,7 @@ man components for the mock package.
 %package python
 Summary: python components for the mock package.
 Group: Default
-Requires: mock-python3
+Requires: mock-python3 = %{version}-%{release}
 
 %description python
 python components for the mock package.
@@ -105,15 +106,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532978598
+export SOURCE_DATE_EPOCH=1538613511
 %autogen --disable-static PYTHON=python3
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1532978598
+export SOURCE_DATE_EPOCH=1538613511
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/mock
-cp COPYING %{buildroot}/usr/share/doc/mock/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/mock
+cp COPYING %{buildroot}/usr/share/package-licenses/mock/COPYING
 %make_install
 ## install_append content
 install -d -m 755 %{buildroot}/usr/share/pam.d
@@ -146,7 +147,7 @@ rm -rf %{buildroot}/etc
 
 %files license
 %defattr(-,root,root,-)
-/usr/share/doc/mock/COPYING
+/usr/share/package-licenses/mock/COPYING
 
 %files man
 %defattr(-,root,root,-)

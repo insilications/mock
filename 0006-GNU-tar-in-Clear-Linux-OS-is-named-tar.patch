@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Fri, 20 Sep 2019 13:35:23 -0700
+Subject: [PATCH] GNU tar in Clear Linux OS is named "tar"
+
+Perhaps we should provide a /usr/bin/gtar symlink for cross-distro
+compatibility, but until that decision is made, call `tar` instead of
+`gtar`, since that is what the tar package ships with.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ mock/py/mockbuild/plugins/root_cache.py | 4 ++--
+ mock/py/mockbuild/scm.py                | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/mock/py/mockbuild/plugins/root_cache.py b/mock/py/mockbuild/plugins/root_cache.py
+index 9560b37..36f4d6a 100644
+--- a/mock/py/mockbuild/plugins/root_cache.py
++++ b/mock/py/mockbuild/plugins/root_cache.py
+@@ -142,7 +142,7 @@ class RootCache(object):
+                 if self.config["tar"] == "bsdtar":
+                     __tar_cmd = "bsdtar"
+                 else:
+-                    __tar_cmd = "gtar"
++                    __tar_cmd = "tar"
+                 mockbuild.util.do(
+                     [__tar_cmd] + self.decompressArgs + ["-xf", self.rootCacheFile,
+                                                          "-C", self.buildroot.make_chroot_path()],
+@@ -210,7 +210,7 @@ class RootCache(object):
+                                  "-C", self.buildroot.make_chroot_path()] + \
+                                 self.exclude_tar_cmds + ["."]
+                 else:
+-                    __tar_cmd = ["gtar", "--one-file-system", "--exclude-caches", "--exclude-caches-under"] + \
++                    __tar_cmd = ["tar", "--one-file-system", "--exclude-caches", "--exclude-caches-under"] + \
+                                  self.compressArgs + \
+                                  ["-cf", self.rootCacheFile,
+                                   "-C", self.buildroot.make_chroot_path()] + \
+diff --git a/mock/py/mockbuild/scm.py b/mock/py/mockbuild/scm.py
+index dcdbf64..c9a3722 100644
+--- a/mock/py/mockbuild/scm.py
++++ b/mock/py/mockbuild/scm.py
+@@ -187,9 +187,9 @@ class scmWorker(object):
+             if self.config["tar"] == "bsdtar":
+                 __tar_cmd = "bsdtar"
+             else:
+-                __tar_cmd = "gtar"
++                __tar_cmd = "tar"
+             # Always exclude vcs data from tarball unless told not to
+-            if str(self.exclude_vcs).lower() == "true" and __tar_cmd == 'gtar':
++            if str(self.exclude_vcs).lower() == "true" and __tar_cmd == 'tar':
+                 proc = subprocess.Popen(['tar', '--help'], shell=False, stdout=subprocess.PIPE)
+                 proc_result = proc.communicate()[0]
+                 if six.PY3:

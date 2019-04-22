@@ -1,4 +1,4 @@
-From 52ea6e5532df9898d2db3f7c34aa8b7e7de01de6 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Caio Marcelo de Oliveira Filho <caio.oliveira@intel.com>
 Date: Tue, 17 Oct 2017 12:19:09 -0700
 Subject: [PATCH] Add entry for mock in sudoers
@@ -28,6 +28,3 @@ index 0000000..aafff95
 +++ b/mock.sudoers
 @@ -0,0 +1 @@
 +%mock ALL = (root) NOPASSWD: /usr/bin/mock
--- 
-2.9.5
-

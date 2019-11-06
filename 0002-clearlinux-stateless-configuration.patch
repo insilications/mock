@@ -3,13 +3,17 @@ From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
 Date: Wed, 24 Jan 2018 11:17:28 -0600
 Subject: [PATCH] clearlinux stateless configuration
 
+Changes for the 1.4.21 release: fall back to /usr/share/defaults/mock
+for bash completions and for the logging.ini file.
+
 Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
- mock/docs/mock.1        |  9 ++++++---
- mock/etc/mock/clear.cfg | 42 +++++++++++++++++++++++++++++++++++++++++
- mock/py/mock.py         |  5 ++++-
- 3 files changed, 52 insertions(+), 4 deletions(-)
+ mock/docs/mock.1                |  9 ++++---
+ mock/etc/bash_completion.d/mock |  4 ++--
+ mock/etc/mock/clear.cfg         | 42 +++++++++++++++++++++++++++++++++
+ mock/py/mock.py                 |  9 ++++---
+ 4 files changed, 56 insertions(+), 8 deletions(-)
  create mode 100644 mock/etc/mock/clear.cfg
 
 diff --git a/mock/docs/mock.1 b/mock/docs/mock.1
@@ -39,6 +43,28 @@ index f44a0dd..5e56ecb 100644
  .LP
  \fI/var/lib/mock\fP \- directory where chroots and results are created. You should not put there your input files.
  .SH "EXAMPLES"
+diff --git a/mock/etc/bash_completion.d/mock b/mock/etc/bash_completion.d/mock
+index cc3ec92..fc47c39 100644
+--- a/mock/etc/bash_completion.d/mock
++++ b/mock/etc/bash_completion.d/mock
+@@ -2,7 +2,7 @@
+ 
+ _mock_root()
+ {
+-    test $# -eq 0 && set -- /etc/mock "$HOME/.config/mock"
++    test $# -eq 0 && set -- /etc/mock "$HOME/.config/mock" /usr/share/defaults/mock
+ 
+     local suggest=$(
+       shopt -s nullglob
+@@ -28,7 +28,7 @@ _mock()
+     local cur prev words cword split
+     _init_completion -s || return
+ 
+-    local cfgdirs=( /etc/mock "$HOME/.config/mock" )
++    local cfgdirs=( /etc/mock "$HOME/.config/mock" /usr/share/defaults/mock )
+     local count=0
+     for word in "${words[@]}" ; do
+         [[ $count -eq $cword ]] && break
 diff --git a/mock/etc/mock/clear.cfg b/mock/etc/mock/clear.cfg
 new file mode 100644
 index 0000000..49e866b
@@ -88,7 +114,7 @@ index 0000000..49e866b
 +enabled=1
 +"""
 diff --git a/mock/py/mock.py b/mock/py/mock.py
-index 50d412d..5347d3d 100755
+index 50d412d..3064d8c 100755
 --- a/mock/py/mock.py
 +++ b/mock/py/mock.py
 @@ -70,6 +70,7 @@ SYSCONFDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "..",
@@ -99,6 +125,19 @@ index 50d412d..5347d3d 100755
  # end build system subs
  
  # import all mockbuild.* modules after this.
+@@ -424,10 +425,10 @@ def setup_logging(config_path, config_opts, options):
+ 
+     try:
+         if not os.path.exists(log_ini):
+-            if os.path.normpath('/etc/mock') != os.path.normpath(config_path):
++            if os.path.normpath(DEFAULTMOCKCONFDIR) != os.path.normpath(config_path):
+                 log.warning("Could not find required logging config file: %s. Using default...",
+                             log_ini)
+-                log_ini = os.path.join("/etc/mock", config_opts["log_config_file"])
++                log_ini = os.path.join(DEFAULTMOCKCONFDIR, config_opts["log_config_file"])
+                 if not os.path.exists(log_ini):
+                     raise IOError("Could not find log config file %s" % log_ini)
+             else:
 @@ -611,7 +612,9 @@ def main():
          options.verbose = 0
  

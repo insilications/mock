@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.4.21.1
-Release  : 49
+Release  : 50
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.4.21-1/mock-1.4.21.1.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.4.21-1/mock-1.4.21.1.tar.gz
 Summary  : A simple chroot build environment manager for building RPMs
@@ -33,6 +33,7 @@ Patch4: 0004-Add-entry-for-mock-in-sudoers.patch
 Patch5: 0005-Allow-the-groupadd-g-command-to-fail.patch
 Patch6: 0006-GNU-tar-in-Clear-Linux-OS-is-named-tar.patch
 Patch7: 0007-Set-chroot-group-to-mockbuild.patch
+Patch8: 0008-Add-option-for-systemd-nspawn-to-prevent-stdin-being.patch
 
 %description
 Mock is used by the Fedora Build system to populate a chroot environment, which
@@ -113,13 +114,14 @@ cd %{_builddir}/mock-mock-1.4.21-1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573082119
+export SOURCE_DATE_EPOCH=1575486428
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -129,7 +131,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1573082119
+export SOURCE_DATE_EPOCH=1575486428
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mock
 cp %{_builddir}/mock-mock-1.4.21-1/LICENSE %{buildroot}/usr/share/package-licenses/mock/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1

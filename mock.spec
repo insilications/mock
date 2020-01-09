@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 1.4.21.1
-Release  : 53
+Release  : 54
 URL      : https://github.com/rpm-software-management/mock/archive/mock-1.4.21-1/mock-1.4.21.1.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-1.4.21-1/mock-1.4.21.1.tar.gz
 Summary  : A simple chroot build environment manager for building RPMs
@@ -17,11 +17,9 @@ Requires: mock-license = %{version}-%{release}
 Requires: mock-man = %{version}-%{release}
 Requires: mock-python = %{version}-%{release}
 Requires: mock-python3 = %{version}-%{release}
-Requires: Jinja2
 Requires: distro
 Requires: pyroute2
 Requires: six
-BuildRequires : Jinja2
 BuildRequires : distro
 BuildRequires : pyroute2
 BuildRequires : python3
@@ -121,7 +119,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575486428
+export SOURCE_DATE_EPOCH=1578585878
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -131,7 +130,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1575486428
+export SOURCE_DATE_EPOCH=1578585878
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mock
 cp %{_builddir}/mock-mock-1.4.21-1/LICENSE %{buildroot}/usr/share/package-licenses/mock/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1
@@ -141,6 +140,7 @@ cp %{_builddir}/mock-mock-1.4.21-1/mock/COPYING %{buildroot}/usr/share/package-l
 ## install_append content
 install -d %{buildroot}/usr/share/defaults/sudo/sudoers.d
 install -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
+
 ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg
 ## install_append end
 

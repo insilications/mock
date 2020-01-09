@@ -6,3 +6,4 @@
 0006-GNU-tar-in-Clear-Linux-OS-is-named-tar.patch
 0007-Set-chroot-group-to-mockbuild.patch
 0008-Add-option-for-systemd-nspawn-to-prevent-stdin-being.patch
+0009-Disable-Jinja2-use.patch

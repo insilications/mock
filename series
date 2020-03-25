@@ -7,3 +7,4 @@
 0007-Set-chroot-group-to-mockbuild.patch
 0008-Add-option-for-systemd-nspawn-to-prevent-stdin-being.patch
 0009-Disable-Jinja2-use.patch
+0010-Do-not-disable-unavailable-plugin.patch

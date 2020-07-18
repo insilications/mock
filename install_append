@@ -1,4 +1,5 @@
 install -d %{buildroot}/usr/share/defaults/sudo/sudoers.d
+pushd mock/
 install -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
-
+popd
 ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg

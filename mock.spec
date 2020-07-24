@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : mock
-Version  : 2.3.1
-Release  : 5
-URL      : file:///insilications/build/clearlinux/packages/mock/mock-v2.3.1.zip
-Source0  : file:///insilications/build/clearlinux/packages/mock/mock-v2.3.1.zip
+Version  : 2.4
+Release  : 6
+URL      : file:///insilications/build/clearlinux/packages/mock/mock-v2.4.zip
+Source0  : file:///insilications/build/clearlinux/packages/mock/mock-v2.4.zip
 Summary  : Builds packages inside chroots
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+
@@ -86,15 +86,15 @@ python3 components for the mock package.
 
 
 %prep
-%setup -q -n mock-v2.3.1
-cd %{_builddir}/mock-v2.3.1
+%setup -q -n mock-v2.4
+cd %{_builddir}/mock-v2.4
 
 %build
 unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595061022
+export SOURCE_DATE_EPOCH=1595551826
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe"
@@ -119,7 +119,7 @@ popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1595061022
+export SOURCE_DATE_EPOCH=1595551826
 rm -rf %{buildroot}
 pushd mock/
 %make_install

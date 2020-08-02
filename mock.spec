@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : mock
 Version  : 2.4
-Release  : 6
+Release  : 7
 URL      : file:///insilications/build/clearlinux/packages/mock/mock-v2.4.zip
 Source0  : file:///insilications/build/clearlinux/packages/mock/mock-v2.4.zip
 Summary  : Builds packages inside chroots
@@ -23,6 +23,7 @@ Requires: pyroute2
 Requires: six
 BuildRequires : Jinja2
 BuildRequires : distro
+BuildRequires : findutils
 BuildRequires : pyroute2
 BuildRequires : python3
 BuildRequires : six
@@ -94,7 +95,7 @@ unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595551826
+export SOURCE_DATE_EPOCH=1596352053
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe"
@@ -119,7 +120,7 @@ popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1595551826
+export SOURCE_DATE_EPOCH=1596352053
 rm -rf %{buildroot}
 pushd mock/
 %make_install

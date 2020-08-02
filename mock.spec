@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : mock
-Version  : 2.4
-Release  : 7
-URL      : file:///insilications/build/clearlinux/packages/mock/mock-v2.4.zip
-Source0  : file:///insilications/build/clearlinux/packages/mock/mock-v2.4.zip
+Version  : 20.08.02
+Release  : 8
+URL      : file:///insilications/build/clearlinux/packages/mock/mock-20.08.02.zip
+Source0  : file:///insilications/build/clearlinux/packages/mock/mock-20.08.02.zip
 Summary  : Builds packages inside chroots
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+
@@ -87,15 +87,15 @@ python3 components for the mock package.
 
 
 %prep
-%setup -q -n mock-v2.4
-cd %{_builddir}/mock-v2.4
+%setup -q -n mock-20.08.02
+cd %{_builddir}/mock-20.08.02
 
 %build
 unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1596352053
+export SOURCE_DATE_EPOCH=1596352515
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe"
@@ -114,22 +114,17 @@ export RANLIB=gcc-ranlib
 export NM=gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags1 end
-pushd mock/
 make  %{?_smp_mflags}
-popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1596352053
+export SOURCE_DATE_EPOCH=1596352515
 rm -rf %{buildroot}
-pushd mock/
 %make_install
-popd
 ## install_append content
 install -d %{buildroot}/usr/share/defaults/sudo/sudoers.d
-pushd mock/
 install -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
-popd
+
 ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg
 ## install_append end
 

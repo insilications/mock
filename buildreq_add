@@ -2,3 +2,8 @@
 # picked up automatically. One name per line, no whitespace.
 python3
 findutils
+six
+distro
+pyroute2
+Jinja2
+templated-dictionary

@@ -3,3 +3,5 @@
 six
 distro
 pyroute2
+Jinja2
+templated-dictionary

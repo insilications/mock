@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : mock
 Version  : 2.8.1
-Release  : 68
+Release  : 69
 URL      : file:///insilications/build/clearlinux/packages/mock/mock-2.8.1.tar.gz
 Source0  : file:///insilications/build/clearlinux/packages/mock/mock-2.8.1.tar.gz
 Summary  : Builds packages inside chroots
@@ -98,7 +98,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1608251965
+export SOURCE_DATE_EPOCH=1610370579
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC"
@@ -117,14 +117,11 @@ export RANLIB=gcc-ranlib
 export NM=gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags1 end
-##
-%global _lto_cflags 1
-##
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1608251965
+export SOURCE_DATE_EPOCH=1610370579
 rm -rf %{buildroot}
 %make_install
 ## install_append content

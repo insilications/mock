@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : mock
-Version  : 34.4.1
-Release  : 82
-URL      : file:///aot/build/clearlinux/packages/mock/mock-v34.4-1.tar.gz
-Source0  : file:///aot/build/clearlinux/packages/mock/mock-v34.4-1.tar.gz
+Version  : 34.5.1
+Release  : 83
+URL      : file:///aot/build/clearlinux/packages/mock/mock-v34.5.1.tar.gz
+Source0  : file:///aot/build/clearlinux/packages/mock/mock-v34.5.1.tar.gz
 Summary  : Builds packages inside chroots
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+ WTFPL
@@ -100,7 +100,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1624187039
+export SOURCE_DATE_EPOCH=1628810598
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC"
@@ -123,13 +123,13 @@ make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 
 %install
-export SOURCE_DATE_EPOCH=1624187039
+export SOURCE_DATE_EPOCH=1628810598
 rm -rf %{buildroot}
 %make_install
 ## install_append content
 install -d %{buildroot}/usr/share/defaults/sudo/sudoers.d
 install -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
-
+install -p -m 0644 mock/docs/site-defaults.cfg %{buildroot}/usr/share/defaults/mock/
 ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg
 ## install_append end
 

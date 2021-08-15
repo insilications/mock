@@ -1,10 +1,10 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
-python3
-findutils
-six
 distro
-pyroute2
+findutils
 Jinja2
-templated-dictionary
+pyroute2
+python3
 requests
+six
+templated-dictionary

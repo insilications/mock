@@ -1,4 +1,0 @@
-install -d %{buildroot}/usr/share/defaults/sudo/sudoers.d
-install -m 440 mock.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/mock
-install -p -m 0644 mock/docs/site-defaults.cfg %{buildroot}/usr/share/defaults/mock/
-ln -sf clear.cfg %{buildroot}/usr/share/defaults/mock/default.cfg

@@ -1,8 +1,9 @@
 # This file contains additional runtime requirements that did not get
 # picked up automatically. One name per line, no whitespace.
-Jinja2
-distro
-pyroute2
-requests
+python3
 six
-templated-dictionary
+pypi(distro)
+pypi(jinja2)
+pypi(pyroute2)
+pypi(requests)
+pypi(templated_dictionary)

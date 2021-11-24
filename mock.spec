@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : mock
 Version  : 2.15
-Release  : 404
+Release  : 405
 URL      : file:///aot/build/clearlinux/packages/mock/mock-v2.15.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/mock/mock-v2.15.tar.gz
 Summary  : Builds packages inside chroots
@@ -17,25 +17,21 @@ Requires: mock-libexec = %{version}-%{release}
 Requires: mock-man = %{version}-%{release}
 Requires: mock-python = %{version}-%{release}
 Requires: mock-python3 = %{version}-%{release}
-Requires: Jinja2
-Requires: distro
-Requires: pyroute2
-Requires: requests
+Requires: pypi(distro)
+Requires: pypi(jinja2)
+Requires: pypi(pyroute2)
+Requires: pypi(requests)
+Requires: pypi(templated_dictionary)
+Requires: python3
 Requires: six
-Requires: templated-dictionary
-BuildRequires : Jinja2
-BuildRequires : distro
 BuildRequires : findutils
 BuildRequires : pypi(distro)
 BuildRequires : pypi(jinja2)
 BuildRequires : pypi(pyroute2)
 BuildRequires : pypi(requests)
 BuildRequires : pypi(templated_dictionary)
-BuildRequires : pyroute2
 BuildRequires : python3
-BuildRequires : requests
 BuildRequires : six
-BuildRequires : templated-dictionary
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -90,11 +86,6 @@ python components for the mock package.
 Summary: python3 components for the mock package.
 Group: Default
 Requires: python3-core
-Requires: pypi(distro)
-Requires: pypi(jinja2)
-Requires: pypi(pyroute2)
-Requires: pypi(requests)
-Requires: pypi(templated_dictionary)
 
 %description python3
 python3 components for the mock package.
@@ -110,7 +101,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1637716530
+export SOURCE_DATE_EPOCH=1637717051
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g3 -ggdb -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=auto -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -fomit-frame-pointer -fexceptions -static-libstdc++ -static-libgcc -Wl,--build-id=sha1"
@@ -187,7 +178,7 @@ make  %{?_smp_mflags}    V=1 VERBOSE=1 CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}"
 
 
 %install
-export SOURCE_DATE_EPOCH=1637716530
+export SOURCE_DATE_EPOCH=1637717051
 rm -rf %{buildroot}
 %make_install
 

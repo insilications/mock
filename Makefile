@@ -1,5 +1,5 @@
 PKG_NAME := mock
-URL = https://github.com/insilications/mock-clr.git
+URL = /insilications/build/git-clr/mock-clr/
 ARCHIVES = 
 ARCHIVES_GIT = 
 

@@ -5,5 +5,5 @@ six
 pypi(distro)
 pypi(jinja2)
 pypi(pyroute2)
-pypi(requests)
+pypi(pypi-requests)
 pypi(templated_dictionary)
